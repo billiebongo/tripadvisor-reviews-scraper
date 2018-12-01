@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Results</title>
+<link rel="stylesheet" href={% static 'styling.css' %}>
+</head>
+
+<body>
+    <div class="outer">
+        <br>
+        <br>
+    {% for restaurant in results %}
+    <p><a href={{restaurant.url.0}}>{{ restaurant.rest_name.0}}</a> 
+    	({{restaurant.url.0}})
+    	<p>{% if restaurant.total_score.0 %} Average TripAdvisor ratings: {{restaurant.total_score.0}}{% endif %}</p>
+    	{% for review in restaurant.childDocuments %}
+        {{review.reviewer.0}} : 
+        {{review.score}}
+    	{{ review.review_body}} <br>
+    	{% endfor %} <br>
+<div class="line"></div>
+
+  {% endfor %}
+</div>
+</body>
+
+</html> 

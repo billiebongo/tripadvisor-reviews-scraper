@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>SGFOOD!</title>
+  <link rel="stylesheet" href={% static 'styling.css' %}>
+</head>
+
+<body>
+<div class="bg">
+<div class="centered">
+	FOOD REVIEWS SEARCH ENGINE
+<form type="get" action="/results/" style="margin: 0">
+	
+    <input  id="search_box" type="text" name="search_box"  placeholder="query" left="50%" >
+    <button id="search_submit" type="submit" >Search!</button>
+    
+</form>
+</form>
+</div>
+</div>
+</html> 
