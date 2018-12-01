@@ -1,5 +1,8 @@
 import os
 
+"""
+Helper functions to retrieve reviews from burrple textfiles
+"""
 
 DATA_DIR='sgfood_app/data/burpple/burp' #change to TA for TA loading
 
@@ -19,9 +22,7 @@ def check_int(s):
         return False
 
 def get_ratings_reviews_from_textfile(filename): 
-	"""
-	Get all textfiles in dir and 
-	"""
+	""" Open textfule return list of ratings and reviews (ordered) """
 	contents=[]
 
 	filename="{}/{}.txt".format(DATA_DIR,filename)
@@ -46,7 +47,7 @@ def get_ratings_reviews_from_textfile(filename):
 	return ratings, reviews
 
 def get_burple_reviews(filename):
-
+	""" given filename return file contents """
 	contents=[]
 
 	filename="{}/{}.txt".format(DATA_DIR,filename)
@@ -56,7 +57,7 @@ def get_burple_reviews(filename):
 		if len(content) > 1:
 			print("not empty")
 			contents += [x.strip() for x in content]
-		else: #empty file
+		else: # Some files seem to be empty? no reviews?
 			print("empty file")
 
 	return contents

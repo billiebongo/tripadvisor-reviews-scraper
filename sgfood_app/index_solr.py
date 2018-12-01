@@ -6,7 +6,10 @@ import os
 json_saved_path='json/'
 
 
+
+
 def dump_dict_to_json_file(rest_name, json_contents):
+	""" Independent helper function for testing only """
 	json_filename = json_saved_path+rest_name+'.json'
 	with open(json_filename, 'w') as fp:
 		print(json_contents)
@@ -15,7 +18,8 @@ def dump_dict_to_json_file(rest_name, json_contents):
 	return json_filename
 
 def create_json(restaurant):
-	reviews=Review.objects.filter(restaurant=restaurant)
+	""" Formats Tripadvisor strings queried from DB and returns as a dictionary """
+	reviews = Review.objects.filter(restaurant=restaurant)
 
 	#js=[]
 	r_dict={}
@@ -40,12 +44,15 @@ def create_json(restaurant):
 		review_dict["path"]="2.restaurants.reviews"
 
 		_childDocuments_.append(review_dict)
+
+	# solr params for parent-child documents
 	r_dict["_childDocuments_"]=_childDocuments_
 	#js.append(r_dict)
 	#print(js)
 	return r_dict
 
 def create_burpple_json(restaurant):
+	""" Formats Burpple strings queried from DB and returns as a dictionary """
 	reviews=Review.objects.filter(restaurant=restaurant)
 
 	#js=[]
@@ -69,6 +76,7 @@ def create_burpple_json(restaurant):
 	return r_dict
 
 def post_(r_dict):
+	""" Post to solr end point """
 	format_dict={}
 	format_dict["doc"]=r_dict
 	post_dict={}
@@ -83,6 +91,7 @@ def post_(r_dict):
 def run_script():
 	restaurants=Restaurant.objects.all()
 	for restaurant in restaurants:
+		#this is for TA only
 		js=create_json(restaurant)
 	#print(js)
 		post_(js)
@@ -91,4 +100,4 @@ def run_script():
 
 
 
-	#322585
+	#322585 number of reviews:

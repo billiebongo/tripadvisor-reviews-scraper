@@ -1,6 +1,8 @@
 from django.db import models
 
 
+# Database setup by Django
+
 class Review(models.Model):
 	restaurant = models.ForeignKey('Restaurant', related_name='reviews', on_delete=models.CASCADE, null=True)
 	review_body = models.CharField(max_length=500, blank=False)

@@ -5,9 +5,17 @@ import requests
 from math import ceil
 from bs4 import BeautifulSoup
 
-#get Price, Food, Service, Value, Ambience Ratings for each restaurant on TripAdvisor
+# Retrieve labels for all restaurants
+# Labels are (per restaurant) Price, Food, Service, Value, Ambience
+# ratings for each restaurant on TripAdvisor
+
+URL_SET_LIST = "url_set_2.txt"
 
 def get_rest_dets_for_rest(BASE_URL): #given base URL, output all the reviews
+	""" Parse restaurant page for rating details for each restaurant """
+	# this step should have been done during the scraping of reviews for each restaurant
+	# but the full documents were not stored and it would be too consuming to rebuild
+	# a process that scrapes the more efficient process
 	print("visiting {}".format(BASE_URL))
 
 	session = Session()
@@ -27,10 +35,12 @@ def get_rest_dets_for_rest(BASE_URL): #given base URL, output all the reviews
 
 
 def visit_each_rest(): #loop each of the 9k+ restaurants
-	with open("url_set_2.txt") as f: #first 1000 links
+	with open(URL_SET_LIST) as f: #first 1000 links
 		content = f.readlines()
 		content = [x.strip() for x in content]
 		for i in range(len(content)):
 			get_rest_dets_for_rest("https://www.tripadvisor.com.sg{}".format(content[i]))
+
 if __name__ == '__main__':
+	#for testing
 	get_reviews_for_rest("https://www.tripadvisor.com.sg/Restaurant_Review-g294265-d5421276-Reviews-L_Atelier_Tiramisu-Singapore.html")

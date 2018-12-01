@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 #
 ############################################
 
+URL_SET_LIST = "url_set_3.txt"
 
 def expand_mores(REVIEW_ID_LIST): #review_id is unique, regardless of restaurant
 	""" Retrieve Full length of reviews which Amazon API did not give in initial REQUEST """
@@ -157,21 +158,25 @@ def get_reviews_for_rest(BASE_URL):
 			ALL_REVIEWS_DUMP_PER_PAGE=scrape_reviews(soup) #per page of rest
 			ALL_REVIEWS=ALL_REVIEWS+ALL_REVIEWS_DUMP_PER_PAGE
 	else:
-		print("only one page")
+		print("This restuarant review has only one page! skipping!")
 	
 	filename=BASE_URL.split("Reviews-")[1][:-15]
-	print("printing all reviews of rest into {}".format(filename))
+	print("Collection done, now printing all reviews of rest into {}".format(filename))
 	produce_text_file_per_rest(filename, ALL_REVIEWS)
 
 
 
 def visit_each_rest(): #loop each of the 9k+ restaurants
-	with open("url_set_3.txt") as f: #first 1000 links
+	""" Visit each of the 9k restaurants in Singapore"""
+	with open(URL_SET_LIST) as f: #this run: first 1000 links
 		content = f.readlines()
 		content = [x.strip() for x in content]
 		for i in range(len(content)):
 			get_reviews_for_rest("https://www.tripadvisor.com.sg{}".format(content[i]))
 
-visit_each_rest()
-#get_reviews_for_rest("https://www.tripadvisor.com.sg/Restaurant_Review-g294265-d8027035-Reviews-Llaollao_Natural_Frozen_Yoghurt-Singapore.html")
-#expand_mores(["556842400","555751780"])
+if __name__ == '__main__':
+	visit_each_rest()
+
+	# for testing:
+	#get_reviews_for_rest("https://www.tripadvisor.com.sg/Restaurant_Review-g294265-d8027035-Reviews-Llaollao_Natural_Frozen_Yoghurt-Singapore.html")
+	#expand_mores(["556842400","555751780"])

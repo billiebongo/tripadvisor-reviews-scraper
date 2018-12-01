@@ -13,7 +13,8 @@ session = Session()
 
 
 def scrape_reviews(page_no):
-
+	""" """
+	# this is the SEED_URL with pages directing to individual restaurants
 	REST_URL = 'https://www.tripadvisor.com.sg/Restaurants-g294265-Singapore.html'
 	session.head(REST_URL) #'https://www.burpple.com/mizzy-corner-nasi-lemak/reviews'
 
@@ -24,10 +25,7 @@ def scrape_reviews(page_no):
 			'Referer': "https://www.tripadvisor.com.sg/Restaurants-g294265-Singapore.html"
 		}
 	)
-
-
 	soup = BeautifulSoup(response.content, "html.parser")
-
 
 	for i in range(30):
 		if (i==0):
@@ -45,11 +43,10 @@ def scrape_reviews(page_no):
 	return
 
 def go_each_page():
-	for p in range(262): #only until page 263 got reviews
-		page_no=p*30
+	for p in range(262): #only until page 263 got reviews, restaurants somewhat ordered by number of reviews?
+		page_no = p*30 # 30 restaurants in each page.
 		scrape_reviews(str(page_no))
-		
 	return
 
-
-go_each_page()
+if __name__ == '__main__':
+	go_each_page()

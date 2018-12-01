@@ -10,6 +10,7 @@ stop_words = stopwords.words('english')
 #create the json and post
 
 def clean_review(review):
+	""" Basic cleaning """
 	wordnet_lemmatizer = WordNetLemmatizer()
 	#tokenize\
 	tokens = word_tokenize(review) #by whitespace

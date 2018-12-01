@@ -20,6 +20,7 @@ DATA_DIR='sgfood_app/data/TA/'
 
 
 def calcScore(ratings):
+	""" Generate a more accurate average score of individual ratings. TA only gives to 0.5 accuracy """
 	total_score=0
 	for r in range(len(ratings)):
 		try:
@@ -32,15 +33,16 @@ def calcScore(ratings):
 	return total_score
 
 def create_review(restaurant, score, review_body):
+	""" create review in db. TA rreviews have scores"""
 	review=Review.objects.create(restaurant=restaurant, review_body=review_body, score=score)
 	return review
 
 def create_burpple_review(restaurant, review_body):
+	""" create review in db. """
 	review=Review.objects.create(restaurant=restaurant, review_body=review_body)
 	return review
 
 def get_url(filename):
-
 	with open('sgfood_app/url_list.txt') as f:
 		for line in f:
 
@@ -61,7 +63,7 @@ def get_burpple_url(filename):
 
 
 def get_attributes(filename):
-	
+	""" scraped attributes for TA restaurants are saved in labels.json """
 	with open('sgfood_app/data/labels/labels.json') as js:
 		labels_dict=json.load(js)
 		try:
@@ -107,9 +109,9 @@ def create_restaurant(filename, rest_name, ratings, reviews ):
 		restaurant.save()
 
 def create_burpple_restaurant(filename, reviews):
+	""" add all burrple restaurants to DB """
 	rest_name=filename.replace("_", " ")
 	url=get_burpple_url(filename)
-	print(url)
 	restaurant=Restaurant.objects.create(rest_name=rest_name, url=url)
 	for i in range(len(reviews)):
 		review=create_burpple_review(restaurant, reviews[i])
@@ -119,6 +121,7 @@ def create_burpple_restaurant(filename, reviews):
 
 
 def change_rest_name():
+	""" independent helper function to reformat rest_name"""
 	restaurants=Restaurant.objects.filter(id__gte=3756)
 	for restaurant in restaurants:
 		restaurant.rest_name=restaurant.rest_name.replace("-", " ")
@@ -127,12 +130,8 @@ def change_rest_name():
 
 
 def run_script():
-	"""
-	get all textfiles in dir and create each rest and their reviews
-	"""
+	""" get all textfiles in dir and create each rest and their reviews """
 	file_list=find_files_in_dir()
-
-	
 	for i in range(len(file_list)):
 		print(file_list[i])
 		rest_name=file_list[i]
@@ -141,9 +140,8 @@ def run_script():
 
 
 def burpple_db_start():
+	""" Puts all the burrple text files into database """
 	file_list=find_files_in_dir()
-
-	
 	for i in range(len(file_list)):
 		print(file_list[i])
 		rest_name=file_list[i]
@@ -153,4 +151,4 @@ def burpple_db_start():
 		print(file_list[i])
 		create_burpple_restaurant(file_list[i], contents)
 
-	print("done!")
+	print("Done!")
