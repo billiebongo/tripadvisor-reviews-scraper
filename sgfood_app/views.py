@@ -9,6 +9,7 @@ from .models import Restaurant, Review
 # Create your views here.
 
 def get_review(rests):
+	""" return rest and asso reviews """
 	for rest in rests:
 		if "childDocuments" in rest:
 			for rev in rest["childDocuments"]:
@@ -19,7 +20,7 @@ def get_review(rests):
 
 
 def results(request):
-	''' This could be your actual view or a new one '''
+	''' Result page '''
 	# Your code
 	if (request.method == 'GET') and ('search_box' in request.GET): # If the form is submitted
 
@@ -32,7 +33,7 @@ def results(request):
 	return JsonResponse({'hello': 'search box was empty'})
 
 def home(request):
-	''' This could be your actual view or a new one '''
+	''' Home View '''
 	# Your code
 	return render(request, 'homepage.html')
 

@@ -1,38 +1,42 @@
 
-Documents:
--Crawled text data: /sgfood_app/data/. Folders TA and burpple contain text files of the crawled text.
--The above data is also available in db.sqlite which can be accessed from the admin page for easy viewing. username: lek, password: no89757no89757
 
 
+
+
+
+What this does:
+
+Overview of project:
+Scraped food Reviews from 8000+ Singapore Restaurants in [Tripadvisor](https://www.tripadvisor.com.sg/Restaurants-g294265-Singapore.html)
+Scraped food reviews from  1700+ Singapore Restaurants in [Burpple](https://www.burpple.com)
+
+
+Store original review in Database, sqlite.
+Indexes cleaned review with Solr
+Simple search engine frontend to query indexed data. Server is meant to be run locally.
+
+Note: Data scraped is not uploaded or shared
+
+***
 How to run:
 
-1. Run solr. Put solr-7.2.1 in home directory of (preferably linux) machine. cd into solr-7.2.1 and run $bin/solr start. check if documents is indexed in solr by going to http://127.0.0.1:8983/solr/admin and see the number of documents in core "food"
+1. Set up Solr-7.2.1. The solr syntax used here only works for Solr 7. Create solr core named "food" and run solr locally by running `$bin/solr start`. 
 
-2. cd into /sgfood (directory should have a requirements.txt file). $pip3 install -r requirements.txt 
-Do ensure correct version of Django is used
+2. `cd sgfood` (directory should have a requirements.txt file). Create a virtualenv and `pip3 install -r requirements.txt` 
+Do ensure that correct version of Django is used.
 
-3. $python manage.py runserver
-in your browser, go to http://127.0.0.1:8000/home/
-
-
-youtube link:
-https://youtu.be/ARZhbKJCMIo
+3. `python manage.py runserver`. In your browser, go to http://127.0.0.1:8000/home/
 
 
-if solr index folder does not work:
--install solr 7.2.1.
--create core named "food"
--start solr $bin/solr start
--cd into /sgfood/ directory, and run $python manage.py shell
-In the python shell, run the following 2 lines.
-$from sgfood_app.index_solr import run_script as r
-$r()
+One way to index the scraped data stored in database is to `run python manage.py shell`
+In shell, run the following 2 lines:
+`from sgfood_app.index_solr import run_script as r`
+`r()`
 
--Restart solr core $bin/solr stop and then $bin/solr start
+After indexing is done, restart Solr core by `bin/solr stop` and then `bin/solr start`
 
--check http://127.0.0.1:8983/solr/admin and see the "food" core has documents indexed
+You check http://127.0.0.1:8983/solr/admin and see the "food" core has documents indexed
 
-Data from db.sqlite3 will be posted to "food" core
 
 
 
