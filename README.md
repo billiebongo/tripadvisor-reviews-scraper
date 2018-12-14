@@ -1,8 +1,9 @@
 # Tripadvisor web scraper
 - Scrapes food Reviews from 9 000+ Singapore Restaurants in [Tripadvisor](https://www.tripadvisor.com.sg/Restaurants-g294265-Singapore.html)
 - Scrapes food reviews from  1700+ Singapore Restaurants in [Burpple](https://www.burpple.com)
-- Indexes preprocessed data with Solr and lucene.
-- Provides a simple server with Home and Results Page. Server processes query to better find suitable results (eg identifying if query is a question or looking for food/restaurant related data) and processes resulting query with similar precedure as the data before indexing to ensure consistency
+- Indexes preprocessed data with Solr and Lucene.
+- Provides a simple Django server with Home and Results Page
+- Server processes query to better find suitable results (eg identifying if query is a question or looking for food/restaurant related data) in indexed data and processes resulting query with similar precedure as the data before indexing to ensure consistency
 - original data stored in sqlite3.
  
  
